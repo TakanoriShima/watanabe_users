@@ -1,24 +1,17 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <title>会員一覧</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>会員一覧</h1>
-        <?php if(count($users) !== 0): ?>
-        <?php foreach($users as $user): ?>
-        <ul>
-            <li><?= $user->name ?></li>
-            <li><?= $user->age . '歳' ?></li>
-            <li><?= $user->drink() ?></li>
-        </ul>
-        <?php endforeach; ?>
-        <?php else: ?>
-        <p>会員がいません</p>
-        <?php endif; ?>
-        
-        <p><a href="new.php">新規会員作成</a></p>
-    </body>
-</html>
+<?php
+    // 会員の設計図を読みこむ
+    require_once 'user_dao.php';
+    session_start();
+    
+    // $_SESSION['users'] = null;
+
+    // 全会員情報を保存する配列
+    // $users = $_SESSION['users'];
+    
+    $users = UserDAO::get_all_users();
+    
+    $flash_message = $_SESSION['flash_message'];
+    $_SESSION['flash_message'] = null;
+    
+    // HTMLファイルの表示
+    include_once 'index_view.php';
